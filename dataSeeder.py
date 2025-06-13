@@ -1,6 +1,7 @@
 # ------------------ IMPORTS AND SETUP ----------------- #
 
 import typer
+import json
 from pymongo import MongoClient
 
 app = typer.Typer()
@@ -13,17 +14,37 @@ COLLECTION_NAME = "testColl"
 # db.create_collection(COLLECTION_NAME)
 collection = db[COLLECTION_NAME]
 
+
 # ---------------------- FUNCTIONS --------------------- #
 
+def getDataFromFile():
+    with open("dataToInput.json",'r') as data:
+
+        return json.load(data)
 # --------------------- ENTRYPOINT --------------------- #
 
 
 @app.command("add")
-def add_data(name: str,age: int):
+def add_data(title: str,description: str,start_price: int, reserve_price: int):
     # print(f"data added: {data}")
-    dataToInsert = {"name": name, "age": age }
+    dataToInsert = {
+      "title": title,
+      "description": description,
+      "start_price": start_price,
+      "reserve_price": reserve_price
+    }
     collection.insert_one(dataToInsert)
     print("data added")
+
+@app.command("importFile")
+def import_file():
+    seedData = getDataFromFile()
+    collection.insert_many(seedData["auction_items"])
+
+# @app.command("checkData")
+# def check_data():
+#     getDataFromFile()
+#     print(seedData["auction_items"])
 
 @app.command("getAll")
 def get_all():
@@ -31,10 +52,10 @@ def get_all():
         print(item)
 
 @app.command("delete")
-def del_data(data: str):
+def del_data(field: str, value:str):
     # Assuming 'data' is the name to delete
-    collection.delete_one({"name": data})
-    print(f"data deleted: {data}")
+    collection.delete_one({field: value})
+    print(f"data deleted if exists")
 
 def main(name: str = "name" ):
     print(f"hello {name}")
