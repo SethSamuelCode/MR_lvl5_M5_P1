@@ -1,0 +1,664 @@
+{
+  "auction_items": [
+    {
+      "title": "Vintage 1960s Rolex Submariner",
+      "description": "Rare vintage Rolex Submariner in excellent condition. Original dial and bezel, recently serviced.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "First Edition Harry Potter Book",
+      "description": "First edition, first printing of Harry Potter and the Philosopher's Stone. Excellent condition with original dust jacket.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Antique Victorian Writing Desk",
+      "description": "Beautiful mahogany writing desk from the Victorian era, circa 1870. Original brass hardware.",
+      "start_price": 1200.00,
+      "reserve_price": 2000.00
+    },
+    {
+      "title": "1965 Ford Mustang Convertible",
+      "description": "Restored classic Mustang in candy apple red. Original V8 engine, manual transmission.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Original Andy Warhol Print",
+      "description": "Signed silk-screen print from Warhol's Campbell's Soup series, numbered 52/250.",
+      "start_price": 45000.00,
+      "reserve_price": 60000.00
+    },
+    {
+      "title": "Ming Dynasty Vase",
+      "description": "15th century blue and white porcelain vase, authenticated with documentation.",
+      "start_price": 50000.00,
+      "reserve_price": 75000.00
+    },
+    {
+      "title": "Signed Michael Jordan Jersey",
+      "description": "Authentic Chicago Bulls jersey signed by Michael Jordan with COA.",
+      "start_price": 2500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Vintage Leica M3 Camera",
+      "description": "1954 Leica M3 camera with original 50mm Summicron lens. Excellent working condition.",
+      "start_price": 3000.00,
+      "reserve_price": 4500.00
+    },
+    {
+      "title": "18th Century French Armoire",
+      "description": "Louis XV period armoire in walnut, original hardware and key.",
+      "start_price": 8000.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "1952 Mickey Mantle Baseball Card",
+      "description": "Topps #311 Mickey Mantle rookie card, PSA graded 7.",
+      "start_price": 100000.00,
+      "reserve_price": 150000.00
+    },
+    {
+      "title": "Steinway Grand Piano Model D",
+      "description": "1925 Steinway concert grand piano, fully restored, ebony finish.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "Ancient Roman Coin Collection",
+      "description": "Collection of 50 authenticated Roman coins from 100-300 AD.",
+      "start_price": 5000.00,
+      "reserve_price": 8000.00
+    },
+    {
+      "title": "Tiffany Lamp",
+      "description": "Original Tiffany Studios dragonfly table lamp, circa 1910.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Vintage Gibson Les Paul Guitar",
+      "description": "1959 Gibson Les Paul Standard, sunburst finish, all original.",
+      "start_price": 175000.00,
+      "reserve_price": 250000.00
+    },
+    {
+      "title": "First Apple Computer",
+      "description": "Apple-1 computer, working condition, with original manual.",
+      "start_price": 250000.00,
+      "reserve_price": 350000.00
+    },
+    {
+      "title": "Patek Philippe Watch",
+      "description": "Patek Philippe Nautilus 5711, unworn with box and papers.",
+      "start_price": 75000.00,
+      "reserve_price": 100000.00
+    },
+    {
+      "title": "Salvador Dali Painting",
+      "description": "Original oil painting by Salvador Dali, signed and dated 1965.",
+      "start_price": 200000.00,
+      "reserve_price": 300000.00
+    },
+    {
+      "title": "Rare First Edition Book",
+      "description": "First edition of 'The Great Gatsby' by F. Scott Fitzgerald.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Ancient Egyptian Artifact",
+      "description": "Bronze cat statue from the Late Period, authenticated.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Vintage Coca-Cola Machine",
+      "description": "1950s Vendo 56 Coca-Cola vending machine, restored.",
+      "start_price": 3500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Diamond Engagement Ring",
+      "description": "5-carat diamond ring, VVS1 clarity, D color, with GIA certificate.",
+      "start_price": 150000.00,
+      "reserve_price": 200000.00
+    },
+    {
+      "title": "NASA Space Suit",
+      "description": "Training space suit from Apollo program, authenticated.",
+      "start_price": 40000.00,
+      "reserve_price": 60000.00
+    },
+    {
+      "title": "Vintage Porsche 911",
+      "description": "1973 Porsche 911 Carrera RS, matching numbers.",
+      "start_price": 300000.00,
+      "reserve_price": 400000.00
+    },
+    {
+      "title": "Frank Lloyd Wright Chair",
+      "description": "Original chair designed for the Johnson Wax Building.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Confederate Civil War Sword",
+      "description": "Officer's sword from Civil War, documented history.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Babe Ruth Signed Baseball",
+      "description": "Baseball signed by Babe Ruth in 1932, with COA.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Art Deco Diamond Bracelet",
+      "description": "1920s Cartier diamond and platinum bracelet.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "17th Century World Map",
+      "description": "Hand-colored map by Willem Blaeu, framed.",
+      "start_price": 28000.00,
+      "reserve_price": 40000.00
+    },
+    {
+      "title": "Vintage Hermes Birkin Bag",
+      "description": "Rare crocodile Birkin 35, pristine condition.",
+      "start_price": 55000.00,
+      "reserve_price": 75000.00
+    },
+    {
+      "title": "T-Rex Tooth Fossil",
+      "description": "Authentic Tyrannosaurus Rex tooth, excellent preservation.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Queen Anne Highboy",
+      "description": "18th century maple highboy, original brass.",
+      "start_price": 22000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "1804 Silver Dollar",
+      "description": "Extremely rare Class I 1804 silver dollar.",
+      "start_price": 2000000.00,
+      "reserve_price": 3000000.00
+    },
+    {
+      "title": "Vintage Jukebox",
+      "description": "1946 Wurlitzer 1015, fully restored and working.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Napoleonic War Telescope",
+      "description": "British Naval officer's telescope, dated 1812.",
+      "start_price": 4500.00,
+      "reserve_price": 7500.00
+    },
+    {
+      "title": "Ancient Greek Amphora",
+      "description": "4th century BC decorated amphora, excellent condition.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Early Edison Phonograph",
+      "description": "1878 tin foil phonograph, working condition.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "Stradivarius Violin",
+      "description": "1721 Stradivarius violin with documentation.",
+      "start_price": 2500000.00,
+      "reserve_price": 3500000.00
+    },
+    {
+      "title": "George Washington Letter",
+      "description": "Handwritten letter signed by George Washington, 1789.",
+      "start_price": 120000.00,
+      "reserve_price": 180000.00
+    },
+    {
+      "title": "Vintage Slot Machine",
+      "description": "1940s Mills High-Top slot machine, restored.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Moon Landing Photo Collection",
+      "description": "NASA original photos from Apollo 11 mission.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Fabergé Egg",
+      "description": "Imperial Fabergé egg, documented provenance.",
+      "start_price": 500000.00,
+      "reserve_price": 750000.00
+    },
+    {
+      "title": "Viking Sword",
+      "description": "9th century Viking sword, excavated in Norway.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Vintage Chanel Suit",
+      "description": "1960s Chanel tweed suit, excellent condition.",
+      "start_price": 4500.00,
+      "reserve_price": 7500.00
+    },
+    {
+      "title": "Dinosaur Skeleton",
+      "description": "Complete Velociraptor skeleton, museum quality.",
+      "start_price": 250000.00,
+      "reserve_price": 350000.00
+    },
+    {
+      "title": "Abraham Lincoln's Hat",
+      "description": "Authenticated top hat worn by Lincoln.",
+      "start_price": 200000.00,
+      "reserve_price": 300000.00
+    },
+    {
+      "title": "Vintage Coca-Cola Sign",
+      "description": "1930s porcelain Coca-Cola sign, original.",
+      "start_price": 3500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Ancient Chinese Scroll",
+      "description": "Ming Dynasty landscape scroll painting.",
+      "start_price": 75000.00,
+      "reserve_price": 100000.00
+    },
+    {
+      "title": "Classic Mercedes 300SL",
+      "description": "1955 Mercedes-Benz 300SL Gullwing.",
+      "start_price": 1200000.00,
+      "reserve_price": 1500000.00
+    },
+    {
+      "title": "Victorian Dollhouse",
+      "description": "Fully furnished Victorian dollhouse, circa 1880.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Marilyn Monroe's Dress",
+      "description": "Iconic white dress worn by Marilyn Monroe.",
+      "start_price": 150000.00,
+      "reserve_price": 200000.00
+    },
+    {
+      "title": "Ancient Roman Statue",
+      "description": "2nd century marble statue of Venus.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Vintage Pinball Machine",
+      "description": "1975 Captain Fantastic pinball, restored.",
+      "start_price": 6500.00,
+      "reserve_price": 9000.00
+    },
+    {
+      "title": "Royal Crown",
+      "description": "18th century European royal crown, jeweled.",
+      "start_price": 500000.00,
+      "reserve_price": 750000.00
+    },
+    {
+      "title": "Einstein's Manuscript",
+      "description": "Handwritten physics calculations by Einstein.",
+      "start_price": 250000.00,
+      "reserve_price": 350000.00
+    },
+    {
+      "title": "Vintage Movie Poster",
+      "description": "Original 1939 Gone with the Wind poster.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Japanese Samurai Armor",
+      "description": "Complete Edo period samurai armor set.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "Picasso Ceramic",
+      "description": "Original Picasso ceramic plate, signed.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Victorian Jewelry Box",
+      "description": "Silver and mother of pearl jewelry box, 1850.",
+      "start_price": 3500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Revolutionary War Musket",
+      "description": "American Revolutionary War Brown Bess musket.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Classic Comic Collection",
+      "description": "Complete first 100 issues of Superman comics.",
+      "start_price": 350000.00,
+      "reserve_price": 500000.00
+    },
+    {
+      "title": "Renaissance Tapestry",
+      "description": "16th century Flemish tapestry, biblical scene.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Vintage Motorcycle",
+      "description": "1948 Indian Chief motorcycle, restored.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Gold Rush Nugget",
+      "description": "Large gold nugget from California Gold Rush.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Ancient Persian Carpet",
+      "description": "17th century Persian silk carpet.",
+      "start_price": 75000.00,
+      "reserve_price": 100000.00
+    },
+    {
+      "title": "Vintage Cartier Watch",
+      "description": "1920s Cartier Tank watch, platinum case.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Art Nouveau Lamp",
+      "description": "Gallé cameo glass table lamp, circa 1900.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "African Tribal Mask",
+      "description": "Rare Fang tribal mask from Gabon.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Victorian Chess Set",
+      "description": "Ivory and ebony chess set, London 1875.",
+      "start_price": 4500.00,
+      "reserve_price": 7500.00
+    },
+    {
+      "title": "Vintage Baseball Uniform",
+      "description": "1927 New York Yankees uniform.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Antique Grandfather Clock",
+      "description": "18th century English longcase clock.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Titanic Artifact",
+      "description": "Recovered pocket watch from Titanic wreckage.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "Vintage Camera Collection",
+      "description": "50 rare cameras from 1900-1950.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Ancient Gold Coin",
+      "description": "Byzantine gold solidus, Emperor Justinian.",
+      "start_price": 3500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Art Deco Chandelier",
+      "description": "1930s crystal and bronze chandelier.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Vintage Louis Vuitton Trunk",
+      "description": "1920s Louis Vuitton steamer trunk.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Native American Headdress",
+      "description": "Sioux war bonnet, circa 1880.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Ancient Roman Glass",
+      "description": "Collection of Roman glass vessels.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Vintage Radio Collection",
+      "description": "20 rare tube radios from 1920-1940.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Chinese Jade Carving",
+      "description": "Qing Dynasty white jade dragon.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Victorian Diamond Tiara",
+      "description": "1870s diamond and pearl tiara.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Vintage Telephone Collection",
+      "description": "25 antique telephones, 1890-1930.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Ancient Egyptian Jewelry",
+      "description": "Gold necklace from New Kingdom period.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Classic Chevrolet Corvette",
+      "description": "1963 Chevrolet Corvette Split Window.",
+      "start_price": 150000.00,
+      "reserve_price": 200000.00
+    },
+    {
+      "title": "Vintage Barber Chair",
+      "description": "1910 Koken barber chair, restored.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Medieval Manuscript",
+      "description": "13th century illuminated manuscript.",
+      "start_price": 75000.00,
+      "reserve_price": 100000.00
+    },
+    {
+      "title": "Vintage Star Wars Collection",
+      "description": "Complete set of original Star Wars toys.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Pre-Columbian Gold Mask",
+      "description": "Incan ceremonial gold mask.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Vintage Advertising Signs",
+      "description": "Collection of 30 enamel signs, 1920-1950.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Ancient Greek Jewelry",
+      "description": "Gold wreath from Hellenistic period.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "Victorian Rocking Horse",
+      "description": "Hand-carved wooden rocking horse, 1860.",
+      "start_price": 3500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Vintage Scientific Instruments",
+      "description": "Collection of brass microscopes and telescopes.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Ancient Celtic Jewelry",
+      "description": "Gold torc from Iron Age Britain.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Classic Ferrari",
+      "description": "1967 Ferrari 275 GTB/4, matching numbers.",
+      "start_price": 2500000.00,
+      "reserve_price": 3000000.00
+    },
+    {
+      "title": "Victorian Photo Album",
+      "description": "Leather-bound album with daguerreotypes.",
+      "start_price": 4500.00,
+      "reserve_price": 7500.00
+    },
+    {
+      "title": "Ancient Roman Jewelry",
+      "description": "Gold and emerald necklace, 2nd century AD.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Vintage Fishing Tackle",
+      "description": "Collection of Hardy fishing reels.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Art Deco Furniture Set",
+      "description": "Complete bedroom set by Émile-Jacques Ruhlmann.",
+      "start_price": 150000.00,
+      "reserve_price": 200000.00
+    },
+    {
+      "title": "Ancient Chinese Bronze",
+      "description": "Zhou Dynasty ritual bronze vessel.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Victorian Silver Service",
+      "description": "Complete sterling silver dining service.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Vintage Model Train Set",
+      "description": "Pre-war Lionel train collection.",
+      "start_price": 12000.00,
+      "reserve_price": 18000.00
+    },
+    {
+      "title": "Ancient Maya Artifact",
+      "description": "Carved jade ceremonial mask.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    },
+    {
+      "title": "Vintage Airplane Propeller",
+      "description": "WWI wooden aircraft propeller.",
+      "start_price": 3500.00,
+      "reserve_price": 5000.00
+    },
+    {
+      "title": "Art Nouveau Jewelry",
+      "description": "René Lalique opal and enamel pendant.",
+      "start_price": 25000.00,
+      "reserve_price": 35000.00
+    },
+    {
+      "title": "Ancient Viking Jewelry",
+      "description": "Gold and silver Thor's hammer pendant.",
+      "start_price": 15000.00,
+      "reserve_price": 25000.00
+    },
+    {
+      "title": "Vintage Racing Car",
+      "description": "1956 Maserati 300S competition car.",
+      "start_price": 3500000.00,
+      "reserve_price": 4500000.00
+    },
+    {
+      "title": "Victorian Music Box",
+      "description": "Swiss cylinder music box, 12 airs.",
+      "start_price": 8500.00,
+      "reserve_price": 12000.00
+    },
+    {
+      "title": "Ancient Persian Jewelry",
+      "description": "Achaemenid gold bracelet with lion heads.",
+      "start_price": 35000.00,
+      "reserve_price": 50000.00
+    },
+    {
+      "title": "Vintage Magic Collection",
+      "description": "Houdini's personal stage props.",
+      "start_price": 75000.00,
+      "reserve_price": 100000.00
+    },
+    {
+      "title": "Art Deco Clock",
+      "description": "Cartier mystery clock, circa 1925.",
+      "start_price": 85000.00,
+      "reserve_price": 120000.00
+    },
+    {
+      "title": "Ancient Aztec Artifact",
+      "description": "Ceremonial obsidian knife with mosaic handle.",
+      "start_price": 45000.00,
+      "reserve_price": 65000.00
+    }
+  ]
+}
