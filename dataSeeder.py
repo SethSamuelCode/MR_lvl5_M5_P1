@@ -32,6 +32,8 @@ def get_all():
 
 @app.command("delete")
 def del_data(data: str):
+    # Assuming 'data' is the name to delete
+    collection.delete_one({"name": data})
     print(f"data deleted: {data}")
 
 def main(name: str = "name" ):
