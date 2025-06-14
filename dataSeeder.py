@@ -3,6 +3,9 @@
 import typer
 import json
 from pymongo import MongoClient
+import yaml
+from typing import Final
+import os
 
 app = typer.Typer()
 # ----------------------- DEFINES ---------------------- #
@@ -14,6 +17,12 @@ COLLECTION_NAME = "testColl"
 # db.create_collection(COLLECTION_NAME)
 collection = db[COLLECTION_NAME]
 
+configBase = {
+    "username":"user",
+    "password": "pass",
+    "server": "localhost",
+    "database": "database"
+}
 
 # ---------------------- FUNCTIONS --------------------- #
 
@@ -50,6 +59,17 @@ def import_file():
 def get_all():
     for item in collection.find():
         print(item)
+
+@app.command("setupFile")
+def setup():
+    tempFilename: Final = "configFile.txt"
+    with open(tempFilename,"w") as configFile:
+        yaml.safe_dump(configBase,configFile)
+    input("A file has been created in this directory pelase enter your details and press enter to continue")
+    with open(tempFilename,"r") as configFile:
+        data = yaml.safe_load(configFile)
+        print(data)
+    os.remove(tempFilename)
 
 @app.command("delete")
 def del_data(field: str, value:str):
