@@ -10,15 +10,19 @@ import keyring
 
 app = typer.Typer()
 # ----------------------- DEFINES ---------------------- #
-CONNECTION_STRING = "mongodb://fluffy:pass@localhost/m5Test"
+KEYRING_SERVICE_NAME:Final = "dataSeeder"
+KEYRING_CONNECTION_NAME:Final = "userConnectionString"
+KEYRING_COLLECTION_NAME:Final ="userCollectionName"
+# CONNECTION_STRING = "mongodb://fluffy:pass@localhost/m5Test"
+CONNECTION_STRING = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME)
 mongoConnection = MongoClient(CONNECTION_STRING)
 DATABASE_NAME = "m5Test"
 db = mongoConnection[DATABASE_NAME]
-COLLECTION_NAME = "testColl"
+# COLLECTION_NAME = "testColl"
+COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)
 # db.create_collection(COLLECTION_NAME)
 collection = db[COLLECTION_NAME]
 
-KEYRING_SERVICE_NAME:Final = "dataSeeder"
 
 configBase = {
     "username":"user",
@@ -73,18 +77,18 @@ def setup_with_file():
         data = yaml.safe_load(configFile)
         print(data)
     os.remove(tempFilename)
-
+# prevent passwords being saved in history
 @app.command("setup")
 def setup_interactive(getSettings:bool = False):
     if not getSettings:
         userConnectionString:str = input("enter your connection string:\n")
-        keyring.set_password(KEYRING_SERVICE_NAME,"userConnectionString",userConnectionString)
+        keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME,userConnectionString)
         userCollectionName:str = input("enter the collection name: ")
-        keyring.set_password(KEYRING_SERVICE_NAME,"userCollectionName",userCollectionName)
+        keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME,userCollectionName)
 
     else: 
-        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,"userConnectionString")}")
-        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,"userCollectionName")}")
+        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME)}")
+        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)}")
 
 
 
