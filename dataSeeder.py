@@ -6,6 +6,7 @@ from pymongo import MongoClient
 import yaml
 from typing import Final
 import os
+import keyring
 
 app = typer.Typer()
 # ----------------------- DEFINES ---------------------- #
@@ -16,6 +17,8 @@ db = mongoConnection[DATABASE_NAME]
 COLLECTION_NAME = "testColl"
 # db.create_collection(COLLECTION_NAME)
 collection = db[COLLECTION_NAME]
+
+KEYRING_SERVICE_NAME:Final = "dataSeeder"
 
 configBase = {
     "username":"user",
@@ -61,7 +64,7 @@ def get_all():
         print(item)
 
 @app.command("setupFile")
-def setup():
+def setup_with_file():
     tempFilename: Final = "configFile.txt"
     with open(tempFilename,"w") as configFile:
         yaml.safe_dump(configBase,configFile)
@@ -70,6 +73,20 @@ def setup():
         data = yaml.safe_load(configFile)
         print(data)
     os.remove(tempFilename)
+
+@app.command("setup")
+def setup_interactive(getSettings:bool = False):
+    if not getSettings:
+        userConnectionString:str = input("enter your connection string:\n")
+        keyring.set_password(KEYRING_SERVICE_NAME,"userConnectionString",userConnectionString)
+        userCollectionName:str = input("enter the collection name: ")
+        keyring.set_password(KEYRING_SERVICE_NAME,"userCollectionName",userCollectionName)
+
+    else: 
+        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,"userConnectionString")}")
+        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,"userCollectionName")}")
+
+
 
 @app.command("delete")
 def del_data(field: str, value:str):
