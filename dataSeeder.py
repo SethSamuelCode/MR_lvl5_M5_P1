@@ -18,13 +18,18 @@ KEYRING_COLLECTION_NAME:Final ="userCollectionName"
 
 # CONNECTION_STRING = "mongodb://fluffy:pass@localhost/m5Test"
 CONNECTION_STRING = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME)
+
+if not CONNECTION_STRING:
+    print("you have not set up your connection string please run dataseeder setup")
+    raise typer.Exit()
+
 mongoConnection = MongoClient(CONNECTION_STRING)
 DATABASE_NAME = "m5Test"
 db = mongoConnection[DATABASE_NAME]
 # COLLECTION_NAME = "testColl"
 COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)
 # db.create_collection(COLLECTION_NAME)
-collection = db[COLLECTION_NAME]
+collection = db[COLLECTION_NAME] # type: ignore
 
 # ---------------------- FUNCTIONS --------------------- #
 
@@ -74,9 +79,12 @@ def setup_interactive(getSettings:bool = False):
 
 
 @app.command("delete")
-def del_data(field: str, value:str):
-    # Assuming 'data' is the name to delete
-    collection.delete_one({field: value})
+def del_data(field: str, value:str, multiDelete:bool = False): #add value to delete more then 1 thing
+    if multiDelete:
+        collection.delete_many({field: value})
+    else:
+        # Assuming 'data' is the name to delete
+        collection.delete_one({field: value})
     print(f"data deleted if exists")
 
 def main(name: str = "name" ):
