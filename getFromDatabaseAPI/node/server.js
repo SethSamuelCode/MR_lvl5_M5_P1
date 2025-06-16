@@ -12,20 +12,30 @@ const { MongoClient } = require("mongodb");
 
 // ------------------------ SETUP ----------------------- //
 
+// MongoDB connection configuration from environment variables
 const CONNECTION_STRING = process.env.CONNECTION_STRING;
 const DATABASE_NAME = process.env.DATABASE_NAME;
 const COLLECTION_NAME = process.env.COLLECTION_NAME;
 
+// Object to store database connection and related objects
 const dbObject = {};
 
+/**
+ * Sets up the MongoDB database connection
+ * @param {Object} dbObject - Object to store database connection details
+ */
 async function setupDB(dbObject) {
+  // Create new MongoDB client
   const client = new MongoClient(CONNECTION_STRING);
   dbObject.client = client;
+  // Connect to MongoDB
   await dbObject.client.connect();
+  // Get database and collection references
   dbObject.db = dbObject.client.db(DATABASE_NAME);
   dbObject.collection = dbObject.db.collection(COLLECTION_NAME);
 }
 
+// Initialize database connection
 setupDB(dbObject);
 
 // --------------------- MIDDLEWARES -------------------- //
@@ -34,36 +44,47 @@ const morgan = require("morgan"); // HTTP request logger
 app.use(morgan("dev")); // Log requests to console
 app.use(express.json({ limit: "10MB" })); // Parse JSON bodies up to 10MB.
 
-// Configure CORS to allow only specific origins
+// CORS configuration for handling cross-origin requests
 const corsConfigs = {
   origin: (incomingOrigin, allowedAccess) => {
-    // Allow localhost (any port) and production domain
+    // Define allowed origins (localhost with any port)
     const allowedOrigins = [/^http:\/\/localhost:\d+$/];
-    // Allow requests with no origin (e.g., curl, server-to-server)
+    // Allow requests with no origin or from allowed origins
     if (!incomingOrigin || allowedOrigins.some((testOrigin) => testOrigin.test(incomingOrigin))) {
-      allowedAccess(null, true); // Allow
+      allowedAccess(null, true); // Allow the request
     } else {
-      allowedAccess(null, false); // Deny
+      allowedAccess(null, false); // Deny the request
     }
   },
 };
-app.use(cors(corsConfigs)); // Apply CORS policy
+// Apply CORS configuration
+app.use(cors(corsConfigs));
 
 // ---------------------- FUNCTIONS --------------------- //
 
 // ----------------------- ROUTES ----------------------- //
 
-// Health check/test GET endpoint
+/**
+ * Health check endpoint
+ * GET /test - Returns a success message to verify API is working
+ */
 app.get("/test", (req, resp) => {
   resp.status(200).json({ status: "success", data: "youve hit /test" });
 });
 
-// Test POST endpoint to echo received data
+/**
+ * Test POST endpoint
+ * POST /postTest - Echoes back the received request body
+ */
 app.post("/postTest", (req, resp) => {
   console.log(req.body);
   resp.status(200).json({ status: "success", data: req.body });
 });
 
+/**
+ * GET endpoint for querying documents by exact match
+ * GET /get?key=<field>&value=<value> - Returns documents where field matches value
+ */
 app.get("/get", async (req, resp) => {
   const key = req.query.key;
   try {
@@ -74,6 +95,10 @@ app.get("/get", async (req, resp) => {
   resp.status(200).json({ status: "success", data: results });
 });
 
+/**
+ * GET endpoint for querying documents using regex
+ * GET /getRegex?key=<field>&value=<pattern> - Returns documents where field matches regex pattern
+ */
 app.get("/getRegex", async (req, resp) => {
   const key = req.query.key;
   const value = req.query.value;
@@ -83,6 +108,10 @@ app.get("/getRegex", async (req, resp) => {
   resp.status(200).json({ status: "success", data: results });
 });
 
+/**
+ * POST endpoint for complex queries
+ * POST /get - Accepts query object in request body for flexible searching
+ */
 app.post("/get", async (req, resp) => {
   const body = req.body;
   console.log(body);
@@ -91,6 +120,10 @@ app.post("/get", async (req, resp) => {
   resp.status(200).json({ status: "success", data: results });
 });
 
+/**
+ * GET endpoint to retrieve all documents
+ * GET /getAll - Returns all documents in the collection
+ */
 app.get("/getAll", async (req, resp) => {
   const results = await dbObject.collection.find({}).toArray();
   resp.status(200).json({ status: "success", data: results });
