@@ -66,11 +66,28 @@ app.post("/postTest", (req, resp) => {
 
 app.get("/get", async (req, resp) => {
   const key = req.query.key
-  const value = Number(req.query.value)
+  try{
+    const value = Number(req.query.value)
+  } catch{
+
+  }
   console.log(`key: ${key}, value: ${value}`)
   const results = await dbObject.collection.find({ [key]: value }).toArray();
   resp.status(200).json({ status: "success", data: results });
 });
+
+app.get("/getRegex", async (req, resp) => {
+  const key = req.query.key
+  try{
+    const value = req.query.value
+  } catch{
+
+  }
+  console.log(`key: ${key}, value: ${value}`)
+  const results = await dbObject.collection.find({ [key]: value }).toArray();
+  resp.status(200).json({ status: "success", data: results });
+});
+
 
 app.post("/get", async (req, resp) => {
   const body= req.body
