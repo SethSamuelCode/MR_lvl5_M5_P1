@@ -27,14 +27,17 @@ if not CONNECTION_STRING:
     print("you have not set up your connection string please run dataseeder setup")
     raise typer.Exit()
 
-mongoConnection = MongoClient(CONNECTION_STRING)
-DATABASE_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME)
-db = mongoConnection[DATABASE_NAME]  # type: ignore
-# COLLECTION_NAME = "testColl"
-COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)
-# db.create_collection(COLLECTION_NAME)
-collection = db[COLLECTION_NAME] # type: ignore
+try:
 
+    mongoConnection = MongoClient(CONNECTION_STRING)
+    DATABASE_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME)
+    db = mongoConnection[DATABASE_NAME]  # type: ignore
+    # COLLECTION_NAME = "testColl"
+    COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)
+    # db.create_collection(COLLECTION_NAME)
+    collection = db[COLLECTION_NAME] # type: ignore
+except:
+    print("")
 # ---------------------- FUNCTIONS --------------------- #
 
 def getDataFromFile():

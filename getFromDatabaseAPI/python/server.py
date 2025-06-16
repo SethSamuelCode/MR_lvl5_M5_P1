@@ -28,7 +28,7 @@ app.add_middleware(
 
 
 @app.get("/api/get")
-def get_from_mongo(key: str = "", value: str=""):
+async def get_from_mongo(key: str = "", value: str=""):
    print(f"key: {key} , value: {value}")
    documentStore = []
    for document in collection.find({key:value}):
