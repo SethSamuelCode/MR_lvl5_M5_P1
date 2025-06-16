@@ -64,6 +64,22 @@ app.post("/postTest", (req, resp) => {
   resp.status(200).json({ status: "success", data: req.body });
 });
 
+app.get("/get", async (req, resp) => {
+  const key = req.query.key
+  const value = Number(req.query.value)
+  console.log(`key: ${key}, value: ${value}`)
+  const results = await dbObject.collection.find({ [key]: value }).toArray();
+  resp.status(200).json({ status: "success", data: results });
+});
+
+app.post("/get", async (req, resp) => {
+  const body= req.body
+  console.log(body)
+  console.log(`key: ${body.key}, value: ${body.value}`)
+  const results = await dbObject.collection.find(req.body).toArray();
+  resp.status(200).json({ status: "success", data: results });
+});
+
 app.get("/getAll", async (req, resp) => {
   const results = await dbObject.collection.find({}).toArray();
   resp.status(200).json({ status: "success", data: results });
