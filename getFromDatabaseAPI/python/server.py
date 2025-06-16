@@ -31,11 +31,20 @@ app.add_middleware(
 async def get_from_mongo(key: str = "", value: str=""):
    print(f"key: {key} , value: {value}")
    documentStore = []
-   for document in collection.find({key:value}):
+   for document in collection.find({key : value}):
+      document["_id"] = str(document["_id"])
       documentStore.append(document)
+      print(document)
    return documentStore
 
-
+@app.get("/api/getAll")
+def get_all_from_mongo():
+   documentStore = []
+   for document in collection.find({}):
+      document["_id"] = str(document["_id"])
+      print(document)
+      documentStore.append(document)
+   return documentStore
 
 @app.get("/")
 def def_route():
