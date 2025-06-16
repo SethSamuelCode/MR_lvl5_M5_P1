@@ -15,8 +15,8 @@ app = typer.Typer(
 # ----------------------- DEFINES ---------------------- #
 KEYRING_SERVICE_NAME:Final = "dataSeeder"
 KEYRING_CONNECTION_NAME:Final = "userConnectionString"
+KEYRING_DATABASE_NAME:Final ="userDatabaseName"
 KEYRING_COLLECTION_NAME:Final ="userCollectionName"
-
 # ------------------------ SETUP ----------------------- #
 
 
@@ -28,8 +28,8 @@ if not CONNECTION_STRING:
     raise typer.Exit()
 
 mongoConnection = MongoClient(CONNECTION_STRING)
-DATABASE_NAME = "m5Test"
-db = mongoConnection[DATABASE_NAME]
+DATABASE_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME)
+db = mongoConnection[DATABASE_NAME]  # type: ignore
 # COLLECTION_NAME = "testColl"
 COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)
 # db.create_collection(COLLECTION_NAME)
@@ -110,7 +110,7 @@ def setup_interactive(
     """
     Configure MongoDB connection settings securely using the system keyring.
     
-    The connection string and collection name are stored securely in the system keyring
+    The connection string, database name and collection name are stored securely in the system keyring
     and are not saved in command history.
 
     Args:
@@ -119,10 +119,13 @@ def setup_interactive(
     if not getSettings:
         userConnectionString:str = input("enter your connection string:\n")
         keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME,userConnectionString)
+        userDatabaseName:str = input("enter the database name: ")
+        keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME,userDatabaseName)
         userCollectionName:str = input("enter the collection name: ")
         keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME,userCollectionName)
     else: 
         print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME)}")
+        print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME)}")
         print(f"mongo connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)}")
 
 @app.command("delete")
