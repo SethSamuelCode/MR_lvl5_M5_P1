@@ -4,7 +4,6 @@ import typer
 import json
 from pymongo import MongoClient
 from typing import Final
-import os
 import keyring
 
 app = typer.Typer(
