@@ -34,7 +34,8 @@ Requirements:
 import typer
 import json
 from pymongo import MongoClient
-from typing import Final
+from pymongo.collection import Collection
+from typing import Final, Optional
 import keyring
 import os
 
@@ -52,7 +53,7 @@ KEYRING_DATABASE_NAME: Final = "userDatabaseName"
 KEYRING_COLLECTION_NAME: Final = "userCollectionName"
 
 # ------------------------ SETUP ----------------------- #
-def connect():
+def getMongoCollection() -> Optional[Collection]:
     try:
         # Retrieve MongoDB connection details from system keyring
         CONNECTION_STRING = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_CONNECTION_NAME)
@@ -63,7 +64,8 @@ def connect():
         COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME)
         return db[COLLECTION_NAME]  # type: ignore
     except Exception as e:
-        print(f"Failed to connect to MongoDB: {e}")
+        print(f"Failed to connect to MongoDB. Have you run setup? : {e}")
+        return None
 
 # ---------------------- FUNCTIONS --------------------- #
 
@@ -95,7 +97,10 @@ def add_data(
       "start_price": start_price,
       "reserve_price": reserve_price
     }
-    connect().insert_one(dataToInsert)
+    collection = getMongoCollection()
+    if collection is None:
+        return
+    collection.insert_one(dataToInsert)
     print("Data added")
 
 @app.command("import-file")
@@ -131,7 +136,10 @@ def import_file(
             with open(fileName,'r') as data:
                 try:
                     seedData = json.load(data) 
-                    connect().insert_many(seedData)
+                    collection = getMongoCollection()
+                    if collection is None:
+                        return
+                    collection.insert_many(seedData)
                     print("Data imported successfully")
                 except Exception as e:
                     print("An error occurred: ",e)
@@ -149,7 +157,10 @@ def get_all() -> None:
     Example:
         $ python dataSeeder.py getAll
     """
-    for item in connect().find():
+    collection = getMongoCollection()
+    if collection is None:
+        return
+    for item in collection.find():
         print(item)
 
 @app.command("setup")
@@ -234,11 +245,15 @@ def del_data(
         Delete all items with matching description:
         $ python dataSeeder.py delete description "Rare" --multi
     """
+    collection = getMongoCollection()
+    if collection is None:
+        return
+        
     if multiDelete:
-        result = connect().delete_many({field: value})
+        result = collection.delete_many({field: value})
         print(f"Deleted {result.deleted_count} items matching {field} = {value}")
     else:
-        result = connect().delete_one({field: value})
+        result = collection.delete_one({field: value})
         if result.deleted_count > 0:
             print(f"Deleted item with {field} = {value}")
         else:
