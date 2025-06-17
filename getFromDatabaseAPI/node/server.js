@@ -46,6 +46,7 @@ const client = new OpenAI({
 // --------------------- MIDDLEWARES -------------------- //
 
 const morgan = require("morgan"); // HTTP request logger
+const { title } = require("node:process");
 app.use(morgan("dev")); // Log requests to console
 app.use(express.json({ limit: "10MB" })); // Parse JSON bodies up to 10MB.
 
@@ -122,14 +123,33 @@ app.get("/getAiAssist", async (req, resp) => {
   const response = await client.responses.create({
     prompt: {
       id: "pmpt_6850cf7bec008190a61a7ab27797c167041e322637ae4331",
-      version: "2",
+      version: "3",
     },
     input: value,
   });
 
-  console.log(response.output_text);
+  // console.log(response.output_text);
   regex = new RegExp(response.output_text,"i")
   const results = await dbObject.collection.find({ [key]: { $regex: regex } }).toArray();
+  resp.status(200).json({ status: "success", data: results });
+});
+
+app.get("/getAiAssistTitleAndDescription", async (req, resp) => {
+  const value = req.query.value;
+
+  console.log(`value: ${value}`);
+
+  const response = await client.responses.create({
+    prompt: {
+      id: "pmpt_6850cf7bec008190a61a7ab27797c167041e322637ae4331",
+      version: "3",
+    },
+    input: value,
+  });
+
+  // console.log(response.output_text);
+  regex = new RegExp(response.output_text,"i")
+  const results = await dbObject.collection.find({ $or: [{ title: regex }, {description: regex} ]}).toArray();
   resp.status(200).json({ status: "success", data: results });
 });
 
