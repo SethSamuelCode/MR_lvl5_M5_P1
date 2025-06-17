@@ -1,141 +1,154 @@
-# MR_lvl5_M5_P1 - DataSeeder CLI Tool
+# MR_lvl5_M5_P1 - MongoDB Auction Item Data Seeder CLI
 
-A CLI tool for seeding MongoDB with auction item data. Supports adding individual items, bulk imports, and data management.
+A command-line interface for managing auction item data in MongoDB. This tool provides secure credential management and comprehensive data operations for auction items.
+
+## Features
+
+- Secure credential storage using system keyring
+- Single item addition
+- Bulk import from JSON files
+- Data retrieval and deletion
+- Interactive setup for MongoDB connection
 
 ## Prerequisites
 
 - Python 3.x
-- MongoDB instance (local or remote)
-- Required Python packages (install via pip):
+- MongoDB server (local or remote)
+- Required Python packages:
   ```bash
   pip install -r requirements.txt
   ```
 
+The following packages are required:
+- typer
+- pymongo
+- keyring
+
 ## Initial Setup
 
-Before using the tool, you need to configure your MongoDB connection:
+Before using the tool, you need to configure your MongoDB connection settings:
 
 ```bash
 python dataSeeder.py setup
 ```
 
-This will prompt you for:
+You will be prompted for:
 1. MongoDB connection string
-2. Collection name
+2. Database name
+3. Collection name
 
-Your credentials will be stored securely using the system keyring.
+Your credentials will be stored securely in the system keyring and will not be saved in command history.
 
-## Usage
-
-```console
-$ dataSeeder [OPTIONS] COMMAND [ARGS]...
+To view current settings without changing them:
+```bash
+python dataSeeder.py setup --getSettings
 ```
 
-### Options
-* `--install-completion`: Install completion for the current shell.
-* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
-* `--help`: Show this message and exit.
-
-## Available Commands
+## Commands
 
 ### Add Single Item
-```console
-$ dataSeeder add [OPTIONS] TITLE DESCRIPTION START_PRICE RESERVE_PRICE
+```bash
+python dataSeeder.py add TITLE DESCRIPTION START_PRICE RESERVE_PRICE
 ```
 
-Add a single auction item to the MongoDB collection.
+Adds a single auction item to the MongoDB collection.
 
 **Arguments**:
-* `TITLE`: [required]
-* `DESCRIPTION`: [required]
-* `START_PRICE`: [required]
-* `RESERVE_PRICE`: [required]
+* `TITLE`: The title of the auction item
+* `DESCRIPTION`: A detailed description of the item
+* `START_PRICE`: The starting bid price for the item
+* `RESERVE_PRICE`: The minimum price that must be met for the item to be sold
 
-### Import from File
-```console
-$ dataSeeder importFile [OPTIONS]
+**Example**:
+```bash
+python dataSeeder.py add "Vintage Watch" "A rare 1950s timepiece" 1000 1500
 ```
 
-Bulk import auction items from the dataToInput.json file. The JSON file should contain an 'auction_items' array with objects having the following structure:
+### Import From File
+```bash
+python dataSeeder.py import-file --file FILENAME
+```
+
+Bulk imports auction items from a JSON file. 
+
+**Options**:
+* `-f, --file`: Path to the JSON file containing auction items
+
+The JSON file should contain an array of objects with the following structure:
 ```json
-{
-    "title": "string",
-    "description": "string",
-    "start_price": "integer",
-    "reserve_price": "integer"
-}
+[
+    {
+        "title": "Item Title",
+        "description": "Item Description",
+        "start_price": 1000,
+        "reserve_price": 1500
+    },
+    ...
+]
+```
+
+**Example**:
+```bash
+python dataSeeder.py import-file -f data.json
 ```
 
 ### View All Items
-```console
-$ dataSeeder getAll [OPTIONS]
+```bash
+python dataSeeder.py getAll
 ```
 
-Display all auction items stored in the MongoDB collection, including their MongoDB-generated _id.
-
-### Update Settings
-```console
-$ dataSeeder setup [OPTIONS]
-```
-
-**Options**:
-* `--getsettings / --no-getsettings`: If True, displays current connection settings instead of setting new ones [default: no-getsettings]
+Displays all auction items stored in the MongoDB collection. Items are shown with all fields, including the MongoDB-generated _id, in the order they were added to the collection.
 
 ### Delete Items
-```console
-$ dataSeeder delete [OPTIONS] FIELD VALUE
+```bash
+python dataSeeder.py delete FIELD VALUE [--multi]
 ```
 
-Delete auction items from the MongoDB collection based on a field match.
+Deletes auction items from the MongoDB collection based on a field match.
 
 **Arguments**:
-* `FIELD`: The field name to match for deletion [required]
-* `VALUE`: The value to match for deletion [required]
+* `FIELD`: The field name to match (e.g., 'title', 'description')
+* `VALUE`: The value to match against the field
 
 **Options**:
-* `-m, --multi`: If True, deletes all matching documents instead of just the first one
+* `-m, --multi`: When True, deletes all matching documents; when False, deletes only the first match
 
-## Example Usage
-
-1. Add a single item:
+**Examples**:
 ```bash
-python dataSeeder.py add "Vintage Watch" "A beautiful antique timepiece" 100 150
-```
-
-2. Import multiple items from file:
-```bash
-python dataSeeder.py importFile
-```
-
-3. Delete an item by title:
-```bash
+# Delete first item with matching title
 python dataSeeder.py delete title "Vintage Watch"
+
+# Delete all items with matching description
+python dataSeeder.py delete description "Rare" --multi
 ```
 
-4. Delete multiple items with the same price:
+## Error Handling
+
+The tool includes comprehensive error handling:
+- Validates MongoDB connection settings
+- Checks for file existence during import
+- Provides clear error messages for MongoDB operations
+- Confirms successful operations with meaningful messages
+
+## Security
+
+- All MongoDB connection details are stored securely using the system keyring
+- Sensitive information is never logged or saved in plain text
+- Connection strings are only displayed when explicitly requested
+
+## Exit Codes
+
+The tool will exit with a non-zero status code if:
+- MongoDB connection fails
+- Required connection settings are missing
+- File operations fail
+- Database operations encounter errors
+
+## Getting Help
+
+Each command has detailed help available:
+
 ```bash
-python dataSeeder.py delete start_price 100 --multi
-```
-
-## Data Format
-
-When using the `importFile` command, your `dataToInput.json` should follow this structure:
-
-```json
-{
-    "auction_items": [
-        {
-            "title": "Item 1",
-            "description": "Description of item 1",
-            "start_price": 100,
-            "reserve_price": 150
-        },
-        {
-            "title": "Item 2",
-            "description": "Description of item 2",
-            "start_price": 200,
-            "reserve_price": 250
-        }
-    ]
-}
+python dataSeeder.py --help           # General help
+python dataSeeder.py COMMAND --help   # Command-specific help
 ```
