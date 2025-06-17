@@ -9,6 +9,7 @@ const cors = require("cors"); // CORS middleware
 const PORT = process.env.SERVER_LISTEN_PORT; // Port from environment
 const assert = require("node:assert/strict"); // Assertion utility for debugging
 const { MongoClient } = require("mongodb");
+const OpenAI = require("openai");
 
 // ------------------------ SETUP ----------------------- //
 
@@ -37,6 +38,10 @@ async function setupDB(dbObject) {
 
 // Initialize database connection
 setupDB(dbObject);
+
+const client = new OpenAI({
+  apiKey: process.env.OPEN_API_KEY,
+});
 
 // --------------------- MIDDLEWARES -------------------- //
 
@@ -104,7 +109,27 @@ app.get("/getRegex", async (req, resp) => {
   const value = req.query.value;
 
   console.log(`key: ${key}, value: ${value}`);
-  const results = await dbObject.collection.find({ [key]:{$regex: value, $options: "i"}}).toArray();
+  const results = await dbObject.collection.find({ [key]: { $regex: value, $options: "i" } }).toArray();
+  resp.status(200).json({ status: "success", data: results });
+});
+
+app.get("/getAiAssist", async (req, resp) => {
+  const key = req.query.key;
+  const value = req.query.value;
+
+  console.log(`key: ${key}, value: ${value}`);
+
+  const response = await client.responses.create({
+    prompt: {
+      id: "pmpt_6850cf7bec008190a61a7ab27797c167041e322637ae4331",
+      version: "2",
+    },
+    input: value,
+  });
+
+  console.log(response.output_text);
+  regex = new RegExp(response.output_text,"i")
+  const results = await dbObject.collection.find({ [key]: { $regex: regex } }).toArray();
   resp.status(200).json({ status: "success", data: results });
 });
 
