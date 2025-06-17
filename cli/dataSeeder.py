@@ -38,6 +38,7 @@ from pymongo.collection import Collection
 from typing import Final, Optional
 import keyring
 import os
+import re
 
 app = typer.Typer(
     name="dataSeeder",
@@ -239,7 +240,7 @@ def setup_interactive(
 @app.command("delete")
 def del_data(
     field: str = typer.Argument(..., help="The field name to match for deletion"),
-    value: str = typer.Argument(..., help="The value to match for deletion"),
+    value: str = typer.Argument(..., help="The value to match for deletion"), # type: ignore
     multiDelete: bool = typer.Option(
         False,
         "--multi",
@@ -263,6 +264,11 @@ def del_data(
         Delete all items with matching description:
         $ python dataSeeder.py delete description "Rare" --multi
     """
+    try:
+        value = int(value) #type: int
+    except:
+        print()    
+
     collection = getMongoCollection()
     if collection is None:
         return
