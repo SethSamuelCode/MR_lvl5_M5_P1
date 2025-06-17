@@ -24,10 +24,10 @@ Requirements:
     - Python packages: typer, pymongo, keyring
 """
 
-import sys
-print("Debug: Script starting")
-print(f"Debug: Python version: {sys.version}")
-print(f"Debug: Python executable: {sys.executable}")
+# import sys
+# print("Debug: Script starting")
+# print(f"Debug: Python version: {sys.version}")
+# print(f"Debug: Python executable: {sys.executable}")
 
 # ----------------------- IMPORTS ---------------------- #
 
@@ -52,22 +52,18 @@ KEYRING_DATABASE_NAME: Final = "userDatabaseName"
 KEYRING_COLLECTION_NAME: Final = "userCollectionName"
 
 # ------------------------ SETUP ----------------------- #
-# Retrieve MongoDB connection details from system keyring
-CONNECTION_STRING = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_CONNECTION_NAME)
-
-if not CONNECTION_STRING:
-    print("You have not set up your connection string. Please run 'dataSeeder setup'")
-    raise typer.Exit()
-
-try:
-    # Initialize MongoDB connection and get database/collection references
-    mongoConnection = MongoClient(CONNECTION_STRING)
-    DATABASE_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_DATABASE_NAME)
-    db = mongoConnection[DATABASE_NAME]  # type: ignore
-    COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME)
-    collection = db[COLLECTION_NAME]  # type: ignore
-except Exception as e:
-    print(f"Failed to connect to MongoDB: {e}")
+def connect():
+    try:
+        # Retrieve MongoDB connection details from system keyring
+        CONNECTION_STRING = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_CONNECTION_NAME)
+        # Initialize MongoDB connection and get database/collection references
+        mongoConnection = MongoClient(CONNECTION_STRING)
+        DATABASE_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_DATABASE_NAME)
+        db = mongoConnection[DATABASE_NAME]  # type: ignore
+        COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME)
+        return db[COLLECTION_NAME]  # type: ignore
+    except Exception as e:
+        print(f"Failed to connect to MongoDB: {e}")
 
 # ---------------------- FUNCTIONS --------------------- #
 
@@ -99,7 +95,7 @@ def add_data(
       "start_price": start_price,
       "reserve_price": reserve_price
     }
-    collection.insert_one(dataToInsert)
+    connect().insert_one(dataToInsert)
     print("Data added")
 
 @app.command("import-file")
@@ -135,7 +131,7 @@ def import_file(
             with open(fileName,'r') as data:
                 try:
                     seedData = json.load(data) 
-                    collection.insert_many(seedData)
+                    connect().insert_many(seedData)
                     print("Data imported successfully")
                 except Exception as e:
                     print("An error occurred: ",e)
@@ -153,7 +149,7 @@ def get_all() -> None:
     Example:
         $ python dataSeeder.py getAll
     """
-    for item in collection.find():
+    for item in connect().find():
         print(item)
 
 @app.command("setup")
@@ -239,10 +235,10 @@ def del_data(
         $ python dataSeeder.py delete description "Rare" --multi
     """
     if multiDelete:
-        result = collection.delete_many({field: value})
+        result = connect().delete_many({field: value})
         print(f"Deleted {result.deleted_count} items matching {field} = {value}")
     else:
-        result = collection.delete_one({field: value})
+        result = connect().delete_one({field: value})
         if result.deleted_count > 0:
             print(f"Deleted item with {field} = {value}")
         else:
