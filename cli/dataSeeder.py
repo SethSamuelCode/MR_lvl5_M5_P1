@@ -24,6 +24,11 @@ Requirements:
     - Python packages: typer, pymongo, keyring
 """
 
+import sys
+print("Debug: Script starting")
+print(f"Debug: Python version: {sys.version}")
+print(f"Debug: Python executable: {sys.executable}")
+
 # ----------------------- IMPORTS ---------------------- #
 
 import typer
@@ -63,7 +68,6 @@ try:
     collection = db[COLLECTION_NAME]  # type: ignore
 except Exception as e:
     print(f"Failed to connect to MongoDB: {e}")
-    raise typer.Exit()
 
 # ---------------------- FUNCTIONS --------------------- #
 
@@ -178,17 +182,34 @@ def setup_interactive(
         $ python dataSeeder.py setup --getSettings
     """
     if not getSettings:
-        userConnectionString:str = input("Enter your connection string:\n")
+        print("\n=== MongoDB Connection Setup ===")
+        print("Please enter your MongoDB connection details below:")
+        
+        print("\nStep 1: Connection String")
+        userConnectionString:str = input("Enter your connection string: ")
         keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME,userConnectionString)
+        print("✓ Connection string saved successfully")
+        
+        print("\nStep 2: Database Name")
         userDatabaseName:str = input("Enter the database name: ")
         keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME,userDatabaseName)
+        print("✓ Database name saved successfully")
+        
+        print("\nStep 3: Collection Name")
         userCollectionName:str = input("Enter the collection name: ")
         keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME,userCollectionName)
-        print("Setup complete. You can now use the other commands.")
+        print("✓ Collection name saved successfully")
+        
+        print("\n=== Setup Complete! ===")
+        print("All connection details have been saved securely.")
+        print("You can now use other commands like 'add', 'import-file', 'getAll', etc.")
+        print("To view your settings, run: dataSeeder setup --getSettings")
     else: 
-        print(f"MongoDB connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME)}")
-        print(f"MongoDB database name: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME)}")
-        print(f"MongoDB collection name: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)}")
+        print("\n=== Current MongoDB Settings ===")
+        print(f"Connection string: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME)}")
+        print(f"Database name: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME)}")
+        print(f"Collection name: {keyring.get_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME)}")
+        print("\nTo change these settings, run: dataSeeder setup")
 
 @app.command("delete")
 def del_data(
@@ -226,3 +247,6 @@ def del_data(
             print(f"Deleted item with {field} = {value}")
         else:
             print("No matching item found to delete")
+
+if __name__ == "__main__":
+    app()

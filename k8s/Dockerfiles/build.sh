@@ -1,0 +1,1 @@
+docker build . -t git.sethsamuel.online/fluffy/

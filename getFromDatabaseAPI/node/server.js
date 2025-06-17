@@ -173,6 +173,7 @@ app.get("/getAiAssist", async (req, resp) => {
     const results = await dbObject.collection
       .find({ [key]: { $regex: regex } })
       .toArray();
+      console.log(results)
     resp.status(200).json({ status: "success", data: results });
   } catch (error) {
     resp.status(500).json({ status: "error", message: "AI processing failed" });
