@@ -190,22 +190,40 @@ def setup_interactive(
     """
     if not getSettings:
         print("\n=== MongoDB Connection Setup ===")
-        print("Please enter your MongoDB connection details below:")
+        print("Please enter your MongoDB connection details below (press Enter to keep current value):")
         
         print("\nStep 1: Connection String")
-        userConnectionString:str = input("Enter your connection string: ")
-        keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_CONNECTION_NAME,userConnectionString)
-        print("✓ Connection string saved successfully")
+        current_connection = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_CONNECTION_NAME) or ""
+        prompt = f"Enter your connection string [{current_connection if current_connection else 'not set'}]: "
+        userConnectionString = input(prompt)
+        if userConnectionString.strip():  # Only update if user entered a value
+            keyring.set_password(KEYRING_SERVICE_NAME, KEYRING_CONNECTION_NAME, userConnectionString)
+            print("✓ Connection string updated successfully")
+        else:
+            userConnectionString = current_connection
+            print("✓ Keeping existing connection string")
         
         print("\nStep 2: Database Name")
-        userDatabaseName:str = input("Enter the database name: ")
-        keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_DATABASE_NAME,userDatabaseName)
-        print("✓ Database name saved successfully")
+        current_database = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_DATABASE_NAME) or ""
+        prompt = f"Enter the database name [{current_database if current_database else 'not set'}]: "
+        userDatabaseName = input(prompt)
+        if userDatabaseName.strip():  # Only update if user entered a value
+            keyring.set_password(KEYRING_SERVICE_NAME, KEYRING_DATABASE_NAME, userDatabaseName)
+            print("✓ Database name updated successfully")
+        else:
+            userDatabaseName = current_database
+            print("✓ Keeping existing database name")
         
         print("\nStep 3: Collection Name")
-        userCollectionName:str = input("Enter the collection name: ")
-        keyring.set_password(KEYRING_SERVICE_NAME,KEYRING_COLLECTION_NAME,userCollectionName)
-        print("✓ Collection name saved successfully")
+        current_collection = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME) or ""
+        prompt = f"Enter the collection name [{current_collection if current_collection else 'not set'}]: "
+        userCollectionName = input(prompt)
+        if userCollectionName.strip():  # Only update if user entered a value
+            keyring.set_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME, userCollectionName)
+            print("✓ Collection name updated successfully")
+        else:
+            userCollectionName = current_collection
+            print("✓ Keeping existing collection name")
         
         print("\n=== Setup Complete! ===")
         print("All connection details have been saved securely.")
