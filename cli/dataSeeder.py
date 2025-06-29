@@ -54,7 +54,7 @@ KEYRING_DATABASE_NAME: Final = "userDatabaseName"
 KEYRING_COLLECTION_NAME: Final = "userCollectionName"
 
 # ------------------------ SETUP ----------------------- #
-def getMongoCollection() -> Optional[Collection]:
+def getMongoCollection(collectionName: str|None) -> Optional[Collection]:
     try:
         # Retrieve MongoDB connection details from system keyring
         CONNECTION_STRING = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_CONNECTION_NAME)
@@ -62,7 +62,11 @@ def getMongoCollection() -> Optional[Collection]:
         mongoConnection = MongoClient(CONNECTION_STRING)
         DATABASE_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_DATABASE_NAME)
         db = mongoConnection[DATABASE_NAME]  # type: ignore
-        COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME)
+        if not collectionName:
+            COLLECTION_NAME = keyring.get_password(KEYRING_SERVICE_NAME, KEYRING_COLLECTION_NAME)
+        else:
+            COLLECTION_NAME = collectionName
+        # Return the specified collection from the database
         return db[COLLECTION_NAME]  # type: ignore
     except Exception as e:
         print(f"Failed to connect to MongoDB. Have you run setup? : {e}")
@@ -98,7 +102,7 @@ def add_data(
       "start_price": start_price,
       "reserve_price": reserve_price
     }
-    collection = getMongoCollection()
+    collection = getMongoCollection(None)
     if collection is None:
         return
     collection.insert_one(dataToInsert)
@@ -111,6 +115,15 @@ def import_file(
         "--file",
         "-f",
         help="File to load seed data from",
+    ),
+    # Adding collection name as an option to specify where to import data
+    # This allows flexibility in choosing the collection without hardcoding it
+    # in the function, making it reusable for different collections
+    collectionName: str = typer.Option(
+        ...,
+        "--collection",
+        "-c",
+        help="Name of the MongoDB collection to import data into",
     )
 ) -> None:
     """
@@ -137,9 +150,9 @@ def import_file(
             with open(fileName,'r') as data:
                 try:
                     seedData = json.load(data) 
-                    collection = getMongoCollection()
+                    collection = getMongoCollection(collectionName)
                     if collection is None:
-                        return
+                        raise ValueError("MongoDB collection not found. Have you run setup?")
                     collection.insert_many(seedData)
                     print("Data imported successfully")
                 except Exception as e:
@@ -158,7 +171,7 @@ def get_all() -> None:
     Example:
         $ python dataSeeder.py getAll
     """
-    collection = getMongoCollection()
+    collection = getMongoCollection(None)
     if collection is None:
         return
     for item in collection.find():
@@ -269,7 +282,7 @@ def del_data(
     except:
         print()    
 
-    collection = getMongoCollection()
+    collection = getMongoCollection(None)
     if collection is None:
         return
         

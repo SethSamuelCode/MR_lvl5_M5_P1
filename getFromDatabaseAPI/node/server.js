@@ -164,7 +164,7 @@ app.get("/getAiAssist", async (req, resp) => {
     const response = await client.responses.create({
       prompt: {
         id: "pmpt_6850cf7bec008190a61a7ab27797c167041e322637ae4331",
-        version: "3",
+        version: "2",
       },
       input: value,
     });
@@ -190,7 +190,7 @@ app.get("/getAiAssist", async (req, resp) => {
 app.get("/getAiAssistTitleAndDescription", async (req, resp) => {
   const value = req.query.value;
 
-  console.log(`value: ${value}`);
+  console.log(`value in: ${value}`);
 
   try {
     const response = await client.responses.create({
@@ -201,6 +201,7 @@ app.get("/getAiAssistTitleAndDescription", async (req, resp) => {
       input: value,
     });
 
+    console.log('value from AI: ',response.output_text)
     const regex = new RegExp(response.output_text, "i");
     const results = await dbObject.collection
       .find({ $or: [{ title: regex }, { description: regex }] })
